@@ -1,0 +1,233 @@
+{
+	"comment": "This is an example settings file. A real settings file MUST be called 'settings.json'.",
+
+	"_comment_graphics_folder": "Configure the game's graphics folder location here. This is where the images will be saved to.",
+	"graphics_folder": "D:/Programs/NHL Eastside Hockey Manager 2007/data/pictures",
+
+	"_comment_source_folder": "This is the folder where the script looks for images.",
+	"source_folder": "E:/Files/EHM 2007 Source Files",
+
+	"_comment_instructions": "This portion defines how the source images are processed before saving to the game's graphics folder.",
+	"_comment_instructions2": "Note that any paths written in _config.json's override, include or exclude lists must have processing instructions defined here.",
+	"instructions": {
+		"default-behaviour": {
+			"_comment": "These are the default values for each setting.",
+
+			"_comment_opacity": "How opaque the image should be. 1.0 results in no transparency, 0.0 creates fully transparent pictures.",
+			"opacity": 1.0,
+
+			"_comment_crop": "Determines whether the image is cropped when resizing to fit the target size. More details on this later.",
+			"crop": false,
+
+			"_comment_padding": "Settings 'padding_top', 'padding_bottom', 'padding_left' and 'padding_right' take space from the image and replace it with transparency (for png images) or black (for jpg images).",
+			"_comment_padding2": "Note that they do not add to the total size of the image. Instead, the space for the padding is taken from the picture.",
+
+			"padding_top": 0,
+			"padding_right": 0,
+			"padding_bottom": 0,
+			"padding_left": 0,
+
+			"_comment_extension": "You can define the file extension for all images that are saved in this folder.",
+			"_comment_extension2": "Do not write the preceeding dot (e.g. write 'png' instead of '.png').",
+			"_comment_extesion3": "Value 'null' means that the same extension is used as in the source image.",
+			"_comment_extension4": "Currently supported extensions are png, jpg, and jpeg. The extensions are case-insensitive.",
+			"extension": null,
+
+			"_comment_mask": "The setting 'mask' allows you to blend the image with another image. More details on this later.",
+			"mask": {}
+		},
+
+		"_comment": "The keys in instructions are directory paths inside the game's graphics folder. The complete path is graphics_folder + key.",
+		"_comment2": "The keyword {folder} is special. It gets replaced by the source image's folder name, unless set otherwise in a _config.json file.",
+		"backgrounds/clubs/{folder}": {
+			"_comment_width": "The maximum horizontal space in pixels that the image should take.",
+			"width": 1024,
+
+			"_comment_height": "The maximum vertical space in pixels that the image should take.",
+			"height": 768,
+
+			"_comment_crop": "Let's say we have an image the size of 3191px x 1803px.",
+			"_comment_crop2": "When 'crop' is set to true, this image would first be shrinked to the size of 1359px x 768px,",
+			"_comment_crop3": "and then pixels would be removed from top and/or bottom according to the image's crop_anchor setting defined in _config.json to fit the target dimensions of 1024px x 768px.",
+			"_comment_crop4": "If crop was set to false, the image would be resized to 1024px x 579px, preserving the full picture.",
+			"crop": true,
+
+
+			"extension": "jpg",
+			"mask": {
+				"_comment_image": "The relative path to the image you want to use as the mask.",
+				"_comment_image2": "I highly recommend setting the extension and having a mask image of same format.",
+				"image": "background_mask.jpg",
+
+				"_comment_opacity": "The opacity of the mask image.",
+				"_comment_opacity2": "The value of 0.0 means that the source image would be unaltered by this setting, and 1.0 would make replace the source image entirely by the mask image.",
+				"opacity": 0.502
+			}
+		},
+
+		"backgrounds/comps": {
+			"width": 1024,
+			"height": 768,
+			"crop": true,
+			"extension": "jpg",
+			"mask": {
+				"image": "background_mask.jpg",
+				"opacity": 0.502
+			}
+		},
+		"backgrounds/nations/{folder}": {
+			"width": 1024,
+			"height": 768,
+			"crop": true,
+			"extension": "jpg",
+			"mask": {
+				"image": "background_mask.jpg",
+				"opacity": 0.502
+			}
+		},
+		"backgrounds/nonplayers": {
+			"width": 1024,
+			"height": 768,
+			"crop": true,
+			"extension": "jpg",
+			"mask": {
+				"image": "background_mask.jpg",
+				"opacity": 0.502
+			}
+		},
+		"backgrounds/players": {
+			"width": 1024,
+			"height": 768,
+			"crop": true,
+			"extension": "jpg",
+			"mask": {
+				"image": "background_mask.jpg",
+				"opacity": 0.502
+			}
+		},
+		"logos/clubs/background/{folder}": {
+			"width": 512,
+			"height": 98,
+			"opacity": 0.25,
+			"crop": true,
+			"extension": "png"
+		},
+		"logos/comps/background": {
+			"width": 512,
+			"height": 98,
+			"opacity": 0.25,
+			"crop": true,
+			"extension": "png"
+		},
+		"logos/clubs/huge/{folder}": {
+			"width": 279,
+			"height": 150,
+			"extension": "png"
+		},
+		"logos/comps/huge": {
+			"width": 279,
+			"height": 150,
+			"extension": "png"
+		},
+		"flags/huge/{folder}": {
+			"width": 279,
+			"height": 150,
+			"extension": "png"
+		},
+		"logos/clubs/large/{folder}/away": {
+			"width": 507,
+			"height": 86,
+			"extension": "png"
+		},
+		"logos/clubs/large/{folder}/home": {
+			"width": 507,
+			"height": 86,
+			"extension": "png"
+		},
+		"logos/clubs/large/{folder}": {
+			"width": 507,
+			"height": 86,
+			"extension": "png"
+		},
+		"logos/comps/large": {
+			"width": 507,
+			"height": 86,
+			"extension": "png"
+		},
+		"flags/large/{folder}": {
+			"width": 507,
+			"height": 86,
+			"extension": "png"
+		},
+		"logos/clubs/medium/{folder}": {
+			"width": 120,
+			"height": 69,
+			"crop": true,
+			"padding_bottom": 13,
+			"extension": "png"
+		},
+		"logos/comps/medium": {
+			"width": 120,
+			"height": 69,
+			"extension": "png"
+		},
+		"flags/medium/{folder}": {
+			"width": 120,
+			"height": 69,
+			"crop": true,
+			"padding_bottom": 13,
+			"extension": "png"
+		},
+		"logos/clubs/small/{folder}": {
+			"width": 55,
+			"height": 21,
+			"crop": true,
+			"extension": "png"
+		},
+		"logos/comps/small": {
+			"width": 78,
+			"height": 31,
+			"extension": "png"
+		},
+		"flags/small/{folder}": {
+			"width": 98,
+			"height": 21,
+			"extension": "png"
+		},
+		"news/clubs/{folder}": {
+			"width": 200,
+			"height": 425,
+			"extension": "png"
+		},
+		"news/comps": {
+			"width": 200,
+			"height": 425,
+			"extension": "png"
+		},
+		"news/nations/{folder}": {
+			"width": 200,
+			"height": 425,
+			"extension": "png"
+		},
+		"news/nonplayers": {
+			"width": 200,
+			"height": 425,
+			"extension": "png"
+		},
+		"news/players": {
+			"width": 200,
+			"height": 425,
+			"extension": "png"
+		},
+		"nonplayers": {
+			"width": 200,
+			"height": 200,
+			"extension": "png"
+		},
+		"players": {
+			"width": 200,
+			"height": 200,
+			"extension": "png"
+		}
+	}
+}

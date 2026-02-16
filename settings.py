@@ -1,0 +1,201 @@
+import copy
+import json
+import os
+from typing import Any
+
+from PIL import Image, ImageOps
+from config import IMAGE_EXTENSIONS
+from globals import SCRIPT_DIRECTORY
+
+
+class Settings:
+    """Basic settings."""
+
+    def __init__(self):
+        """Initialise object."""
+        settings: dict[str, Any] = {}
+        with open(os.path.join(SCRIPT_DIRECTORY, "settings.json")) as file:
+            settings = json.load(file)
+
+        assert type(settings["graphics_folder"]) == str
+        assert type(settings["source_folder"]) == str
+
+        self.graphics_folder = os.path.normpath(settings["graphics_folder"])
+        self.source_folder = os.path.normpath(settings["source_folder"])
+
+        self.instructions: dict[str, GraphicsSettings] = {}
+        for folder, instruction in settings["instructions"].items():
+            assert type(folder) == str
+            real_folder = os.path.join(self.graphics_folder, os.path.normpath(folder))
+            self.instructions[real_folder] = GraphicsSettings(real_folder, instruction, self.source_folder)
+
+
+class GraphicsSettings:
+    """Settings for a specific game graphics folder."""
+
+    def __init__(self, folder: str, config: dict[str, Any], source_folder: str):
+        """Initialise object."""
+        assert type(config["width"]) == int
+        assert type(config["height"]) == int
+
+        self.folder = folder
+        self.total_width = config["width"]
+        self.total_height = config["height"]
+
+        self.opacity = 1.0
+        if "opacity" in config:
+            assert type(config["opacity"]) == float
+            self.opacity = config["opacity"]
+
+        self.crop = False
+        if "crop" in config:
+            assert type(config["crop"]) == bool
+            self.crop = config["crop"]
+
+        self.padding_top = 0
+        if "padding_top" in config:
+            assert type(config["padding_top"]) == int
+            self.padding_top = config["padding_top"]
+
+        self.padding_right = 0
+        if "padding_right" in config:
+            assert type(config["padding_right"]) == int
+            self.padding_right = config["padding_right"]
+
+        self.padding_bottom = 0
+        if "padding_bottom" in config:
+            assert type(config["padding_bottom"]) == int
+            self.padding_bottom = config["padding_bottom"]
+
+        self.padding_left = 0
+        if "padding_left" in config:
+            assert type(config["padding_left"]) == int
+            self.padding_left = config["padding_left"]
+
+        self.extension: str | None = None
+        if "extension" in config:
+            assert type(config["extension"]) == str
+            self.extension = f".{config['extension']}"
+
+        self.mask: Mask | None = None
+        if "mask" in config:
+            source = os.path.join(source_folder, os.path.normpath(config["mask"]["image"]))
+            self.mask = Mask(source, config["mask"]["opacity"])
+
+    @property
+    def ratio(self):
+        """Get the image aspect ratio."""
+        return self.real_width / self.real_height
+
+    @property
+    def ratio_inverted(self):
+        """Get the image aspect ratio as height / width."""
+        return self.real_height / self.real_width
+
+    @property
+    def real_width(self):
+        return self.total_width - self.padding_left - self.padding_right
+
+    @property
+    def real_height(self):
+        return self.total_height - self.padding_top - self.padding_bottom
+
+    def process_image(self, image: Image.Image, save_as: str, duplicates: set[str], crop_anchor: float, extension: str, folder: str):
+        """Process the image according to the settings."""
+        image = self.crop_image(image, crop_anchor)
+        image = ImageOps.contain(image, (self.real_width, self.real_height))
+
+        if self.opacity != 1.0:
+            transparency = Image.new(image.mode, (image.width, image.height), "#00000000")
+            image = Image.blend(transparency, image, self.opacity)
+
+        if self.mask is not None:
+            mask = Image.open(self.mask.source)
+            image = Image.blend(image, mask, self.mask.opacity)
+
+        image = self.add_padding(image, extension)
+
+        root = self.folder.format(folder=folder)
+        try:
+            os.makedirs(root)
+        except FileExistsError:
+            pass
+
+        if self.extension is not None:
+            extension = self.extension.lower()
+
+        save_locations = copy.copy(duplicates)
+        save_locations.add(save_as)
+
+        for name in save_locations:
+            image.save(os.path.join(root, name + extension))
+
+    def crop_image(self, image: Image.Image, crop_anchor: float):
+        """Crop the image."""
+        if self.crop == False:
+            return image
+
+        image_ratio = image.width / image.height
+        target_ratio = self.ratio
+
+        # No need to do anything.
+        if target_ratio == image_ratio:
+            return image
+
+        # Turning the image sideways so the same operation works no matter what.
+        transposed = False
+        if target_ratio < image_ratio:
+            image = image.transpose(Image.Transpose.ROTATE_90)
+            transposed = True
+            target_ratio = self.ratio_inverted
+
+        # Remove from top and bottom.
+        new_height = round(image.width / target_ratio)
+
+        trim = image.height - new_height
+
+        crop_centre = image.height * crop_anchor
+
+        # Calculate the top y-axis of the crop.
+        # It cannot be smaller than 0.
+        # It cannot be larger than the y-axis to be trimmed.
+        top_y = min(max(round(crop_centre - (new_height / 2)), 0), trim)
+
+        bottom_y = top_y + new_height
+
+        image = image.crop((0, top_y, image.width, bottom_y))
+        if transposed:
+            image = image.transpose(Image.Transpose.ROTATE_270)
+
+        return image
+
+    def add_padding(self, image: Image.Image, extension: str):
+        """Add padding to the image."""
+        if self.real_width == self.total_width and self.real_height == self.total_height:
+            return image
+
+        mode = IMAGE_EXTENSIONS[extension[1:]]
+        padded_image = None
+
+        if mode == "RGBA":
+            padded_image = Image.new(mode, (self.total_width, self.total_height), "#00000000")
+        elif mode == "RGB":
+            padded_image = Image.new(mode, (self.total_width, self.total_height), "#000000")
+
+        assert type(padded_image) == Image.Image
+
+        padded_image.paste(image, (self.padding_left, self.padding_top))
+        return padded_image
+
+
+class Mask:
+    """Mask image and its opacity."""
+
+    def __init__(self, source: str, opacity: float):
+        """Initialise object."""
+        self.source = source
+        self.opacity = opacity
+
+
+
+settings = Settings()
