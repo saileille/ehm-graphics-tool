@@ -1,5 +1,6 @@
 {
 	"comment": "This is an example settings file. A real settings file MUST be called 'settings.json'.",
+	"comment2": "Settings file must be in the same folder as the executable.",
 
 	"_comment_graphics_folder": "Configure the game's graphics folder location here. This is where the images will be saved to.",
 	"graphics_folder": "D:/Programs/NHL Eastside Hockey Manager 2007/data/pictures",
