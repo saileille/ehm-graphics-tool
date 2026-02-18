@@ -13,7 +13,7 @@ Before using the script, you need to give it instructions on what you want to do
 ## Configuring the `settings.json` File
 The `settings.json` file in the project's root directory has ready-made instructions to get you started, but you need to at least change `graphics_folder` and `source_folder` to the game's graphics folder location and the folder location of your source images, respectively.
 
-> Inside `settings.json`
+Inside `settings.json`:
 ```json
 "graphics_folder": "D:/SteamLibrary/steamapps/common/Eastside Hockey Manager/data/pictures <-- If your game is located in a different folder, you must change this.",
 "source_folder": "E:/Files/EHM Graphics Project <-- Change this to the folder where you keep your source images.",
@@ -133,7 +133,8 @@ In this configuration, what we do with club and competition logos is pretty stra
 We are organising country flags in two folders: `hockey country flags` and `rest of the world flags`. If a country has an ice hockey-related logo (either a team crest or an IHA), its flag gets placed in the `hockey country flags` folder, so only the small version of the flag is saved in the game's graphics folder. If the country is a non-hockey country, its flag is placed in `rest of the world flags`, and the country flag is used for every nation logo size. We are further separating the hockey countries' IHA logos and jersey logos to `iha logos` and `crest logos` folders, respectively. The IHA logos are used in the manager selection screen, while the jersey logos are used everywhere else.
 
 Our configuration does not separate players and non-players. Instead, all people backgrounds are in the same folder, and they get saved as both nonplayers and players.
-<div style="color: white;background-color: red">IMPORTANT! All paths used in override, include and exclude settings MUST have defined instructions in settings.json!</div>
+> [!IMPORTANT]
+> All paths used in `override`, `include` and `exclude` settings MUST have defined instructions in `settings.json`!
 ## Fine-Tuning with Additional _config.json Files
 A single master configuration file can be sufficient, but there can be cases when you want further customisation. Perhaps the same logo is used by multiple teams or competitions. Maybe you want to use an alternative logo for some teams in some logo sizes. What about adding home and away logos? All this is possible by altering or entirely replacing the master config's behaviour in other config files.
 ## The `override` and `save_as` Settings
@@ -170,7 +171,8 @@ In the newly created `_config.json` file, we are going to write the following in
 }
 ```
 Here, the `override` setting tells the script that with the image called "Joensuun Jokipojat HOME-AWAY" in this specific folder, all previous instructions are to be disregarded, and that this logo should only be saved in the `logos/clubs/large/Finland/away` and `home` folders. As "Joensuun Jokipojat HOME-AWAY" is still not a real team name, we must also tell the script that the processed images should be saved as "Joensuun Jokipojat" in the game's graphics folders.
-> Note: The setting "save_as" cannot be defined for entire folders, only for individual files.
+> [!NOTE]
+> The setting `save_as` cannot be defined for entire folders, only for individual files.
 ## Fine-Tuning in the Master `_config.json` File
 You can refer to any any image, sub-folder, or image of a sub-folder in a `_config.json` file. We could make this configuration in the master `_config.json` file just as well, in which case we should add the following entry to it:
 ```json
@@ -307,7 +309,9 @@ As the image name suggests, we want to use the image "Helsingin Jokerit HOME-LAR
     ]
 }
 ```
-As you can see, we can both `include` and `exclude` paths in the same entry! Though you should note that you cannot use the `override` setting in the same entry with `include` or `exclude`, as `override` redefines the script's behaviour, while `include` and `exclude` alter it.
+As you can see, we can both `include` and `exclude` paths in the same entry!
+> [!NOTE]
+> You cannot use the `override` setting in the same entry with `include` or `exclude`, as `override` redefines the script's behaviour, while `include` and `exclude` alter it.
 ## The `ignore` Setting
 We have added lots of files to our `Finland` folder, and even made logos that we might want to use at some time in the future. We have decided to put them in a folder called `alternatives`.
 ```
@@ -344,13 +348,18 @@ Inside, we are going to simply write:
     }
 }
 ```
-The "." refers to the directory where the `_config.json` file is located. Of course, we can also do this in our `Finland` folder's `_config.json` file, in which case the entry would look like this:
+> [!TIP]
+> The "." refers to the directory where the `_config.json` file is located.
+Of course, we can also do this in our `Finland` folder's `_config.json` file, in which case the entry would look like this:
 ```json
 "alternatives/": {
     "ignore": true
 }
 ```
-Note the slash at the end. It is important, as it tells the script that this entry is referring to a folder, not a file. The script does not stop scanning the sub-folders of a folder that is set to be `ignore`d, so you can un-`ignore` sub-folders or images in a `_config.json` file, just like you can overwrite any other setting.
+> [!IMPORTANT]
+> Note the slash at the end! It is important, as it tells the script that this entry is referring to a folder, not an image.
+> [!TIP]
+> The script does not stop scanning the sub-folders of a folder that is set to be `ignore`d, so you can un-`ignore` sub-folders or images in a `_config.json` file, just like you can overwrite any other setting.
 
 The rest of the available settings can be found in the [_config.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/_config.json) file of the project's `docs` folder.
 # Under the Hood
