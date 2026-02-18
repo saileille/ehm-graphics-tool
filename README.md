@@ -9,7 +9,7 @@ This is a Python script utilising the pillow library for mass-manipulating image
 - [Install](https://www.python.org/downloads/) Python 3.
 - [Install](https://pypi.org/project/pillow/) pillow.
 # How to Use
-Before using the script, you need to give it instructions on what you want to do. [_config.json](https://github.com/saileille/ehm-graphics-tool/blob/master/_config.json) and [docs.settings.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs.settings.json), located in the project's root directory, have all the technical documentation you need, while this guide attempts to teach you how to use those files with practical examples.
+Before using the script, you need to give it instructions on what you want to do. [_config.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/_config.json) and [settings.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/settings.json), located in the project's `docs` directory, have all the technical documentation you need, while this guide attempts to teach you how to use those files with practical examples.
 ## Configuring the `settings.json` File
 The `settings.json` file in the project's root directory has ready-made instructions to get you started, but you need to at least change `graphics_folder` and `source_folder` to the game's graphics folder location and the folder location of your source images, respectively.
 
@@ -19,9 +19,9 @@ The `settings.json` file in the project's root directory has ready-made instruct
 "source_folder": "E:/Files/EHM Graphics Project <-- Change this to the folder where you keep your source images.",
 ...
 ```
-On Windows, you can use either slashes (`/`) or two backslashes (`\\`) to separate folders from one another. This applies to every setting in both `settings.json` and `_config.json`.
+On Windows, you can use either slash (`/`) or two backslashes (`\\`) to separate folders from one another. This applies to every setting in both `settings.json` and `_config.json`.
 
-For in-detail documentation of what everything means, see [docs.settings.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs.settings.json).
+For in-detail documentation of what everything means, see [settings.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/settings.json).
 ## Configuring a Master `_config.json` File
 Unlike with `settings.json`, you can have as many `_config.json` files as you like, wherever you want in your source folder. I recommend creating one at the root of your source folder as a master config file, and that is what we are going to do in this guide.
 
@@ -352,7 +352,7 @@ The "." refers to the directory where the `_config.json` file is located. Of cou
 ```
 Note the slash at the end. It is important, as it tells the script that this entry is referring to a folder, not a file. The script does not stop scanning the sub-folders of a folder that is set to be `ignore`d, so you can un-`ignore` sub-folders or images in a `_config.json` file, just like you can overwrite any other setting.
 
-The rest of the available settings can be found in the [_config.json](https://github.com/saileille/ehm-graphics-tool/blob/master/_config.json) file of the project's root folder.
+The rest of the available settings can be found in the [_config.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/_config.json) file of the project's `docs` folder.
 # Under the Hood
 This is a simplified description of what the script does.
 1. The script reads every `_config.json` file in the `source_folder` and its sub-folders.
