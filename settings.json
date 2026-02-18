@@ -1,0 +1,194 @@
+{
+	"graphics_folder": "D:/SteamLibrary/steamapps/common/Eastside Hockey Manager/data/pictures",
+	"source_folder": "E:/Files/EHM Graphics Project",
+	"instructions": {
+		"backgrounds/awards": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+		},
+		"backgrounds/clubs/{folder}": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+		},
+		"backgrounds/comps": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+		},
+		"backgrounds/nations/{folder}": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+		},
+		"backgrounds/nonplayers": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+		},
+		"backgrounds/players": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+		},
+		"logos/clubs/background/{folder}": {
+			"width": 400,
+			"height": 98,
+			"opacity": 0.15,
+			"extension": "png"
+		},
+		"logos/comps/background": {
+			"width": 400,
+			"height": 98,
+			"opacity": 0.15,
+			"extension": "png"
+		},
+		"logos/comps/background/{folder}": {
+			"width": 400,
+			"height": 98,
+			"opacity": 0.15,
+			"extension": "png"
+		},
+		"logos/awards/huge": {
+			"width": 300,
+			"height": 120,
+			"extension": "png"
+		},
+		"logos/clubs/huge/{folder}": {
+			"width": 300,
+			"height": 120,
+			"extension": "png"
+		},
+		"logos/comps/huge": {
+			"width": 300,
+			"height": 120,
+			"extension": "png"
+		},
+		"logos/comps/huge/{folder}": {
+			"width": 300,
+			"height": 120,
+			"extension": "png"
+		},
+		"logos/nations/huge/{folder}": {
+			"width": 300,
+			"height": 120,
+			"extension": "png"
+		},
+		"logos/awards/large": {
+			"width": 120,
+			"height": 70,
+			"extension": "png"
+		},
+		"logos/clubs/large/{folder}/away": {
+			"width": 120,
+			"height": 70,
+			"extension": "png"
+		},
+		"logos/clubs/large/{folder}/home": {
+			"width": 120,
+			"height": 70,
+			"extension": "png"
+		},
+		"logos/clubs/large/{folder}": {
+			"width": 120,
+			"height": 70,
+			"extension": "png"
+		},
+		"logos/comps/large": {
+			"width": 120,
+			"height": 70,
+			"extension": "png"
+		},
+		"logos/comps/large/{folder}": {
+			"width": 120,
+			"height": 70,
+			"extension": "png"
+		},
+		"logos/nations/large/{folder}": {
+			"width": 120,
+			"height": 70,
+			"extension": "png"
+		},
+		"logos/awards/medium": {
+			"width": 80,
+			"height": 45,
+			"extension": "png"
+		},
+		"logos/clubs/medium/{folder}": {
+			"width": 80,
+			"height": 45,
+			"extension": "png"
+		},
+		"logos/comps/medium": {
+			"width": 80,
+			"height": 45,
+			"extension": "png"
+		},
+		"logos/comps/medium/{folder}": {
+			"width": 80,
+			"height": 45,
+			"extension": "png"
+		},
+		"logos/nations/medium/{folder}": {
+			"width": 80,
+			"height": 45,
+			"extension": "png"
+		},
+		"logos/awards/small": {
+			"width": 50,
+			"height": 19,
+			"extension": "png"
+		},
+		"logos/clubs/small/{folder}": {
+			"width": 50,
+			"height": 19,
+			"trim": true,
+			"extension": "png"
+		},
+		"logos/comps/small": {
+			"width": 50,
+			"height": 19,
+			"extension": "png"
+		},
+		"logos/comps/small/{folder}": {
+			"width": 50,
+			"height": 19,
+			"extension": "png"
+		},
+		"logos/nations/small/{folder}": {
+			"width": 50,
+			"height": 19,
+			"extension": "png"
+		},
+		"rinks": {
+			"width": 468,
+			"height": 232,
+			"extension": "png"
+		},
+		"rinks/faceoff": {
+			"width": 100,
+			"height": 100,
+			"opacity": 0.5,
+			"extension": "png"
+		},
+		"rinks/faceoff/zoomed": {
+			"width": 150,
+			"height": 150,
+			"opacity": 0.5,
+			"extension": "png"
+		}
+	}
+}
