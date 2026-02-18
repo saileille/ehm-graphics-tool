@@ -32,7 +32,7 @@ def main():
     generate_config_images()
 
     for config in CONFIG_IMAGES:
-        config.process_image()
+        config.process_source_image()
 
 if __name__ == "__main__":
     main()

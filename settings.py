@@ -47,10 +47,10 @@ class GraphicsSettings:
             assert type(config["opacity"]) == float
             self.opacity = config["opacity"]
 
-        self.crop = False
-        if "crop" in config:
-            assert type(config["crop"]) == bool
-            self.crop = config["crop"]
+        self.trim = False
+        if "trim" in config:
+            assert type(config["trim"]) == bool
+            self.trim = config["trim"]
 
         self.padding_top = 0
         if "padding_top" in config:
@@ -75,7 +75,7 @@ class GraphicsSettings:
         self.extension: str | None = None
         if "extension" in config:
             assert type(config["extension"]) == str
-            self.extension = f".{config['extension']}"
+            self.extension = f".{config['extension']}".lower()
 
         self.mask: Mask | None = None
         if "mask" in config:
@@ -100,9 +100,9 @@ class GraphicsSettings:
     def real_height(self):
         return self.total_height - self.padding_top - self.padding_bottom
 
-    def process_image(self, image: Image.Image, save_as: str, duplicates: set[str], crop_anchor: float, extension: str, folder: str):
+    def process_image(self, image: Image.Image, save_as: str, duplicates: set[str], image_centre_y: float, image_centre_x: float, extension: str, folder: str):
         """Process the image according to the settings."""
-        image = self.crop_image(image, crop_anchor)
+        image = self.trim_image(image, image_centre_y, image_centre_x)
         image = ImageOps.contain(image, (self.real_width, self.real_height))
 
         if self.opacity != 1.0:
@@ -110,8 +110,7 @@ class GraphicsSettings:
             image = Image.blend(transparency, image, self.opacity)
 
         if self.mask is not None:
-            mask = Image.open(self.mask.source)
-            image = Image.blend(image, mask, self.mask.opacity)
+            image = self.mask.apply(image)
 
         image = self.add_padding(image, extension)
 
@@ -122,7 +121,7 @@ class GraphicsSettings:
             pass
 
         if self.extension is not None:
-            extension = self.extension.lower()
+            extension = self.extension
 
         save_locations = copy.copy(duplicates)
         save_locations.add(save_as)
@@ -130,9 +129,9 @@ class GraphicsSettings:
         for name in save_locations:
             image.save(os.path.join(root, name + extension))
 
-    def crop_image(self, image: Image.Image, crop_anchor: float):
-        """Crop the image."""
-        if self.crop == False:
+    def trim_image(self, image: Image.Image, image_centre_y: float, image_centre_x: float):
+        """Trim the image."""
+        if self.trim == False:
             return image
 
         image_ratio = image.width / image.height
@@ -144,22 +143,23 @@ class GraphicsSettings:
 
         # Turning the image sideways so the same operation works no matter what.
         transposed = False
+        centre = image_centre_y
         if target_ratio < image_ratio:
             image = image.transpose(Image.Transpose.ROTATE_90)
             transposed = True
             target_ratio = self.ratio_inverted
+            centre = image_centre_x
 
         # Remove from top and bottom.
         new_height = round(image.width / target_ratio)
 
         trim = image.height - new_height
+        trim_centre = image.height * centre
 
-        crop_centre = image.height * crop_anchor
-
-        # Calculate the top y-axis of the crop.
+        # Calculate the top y-axis of the trim.
         # It cannot be smaller than 0.
         # It cannot be larger than the y-axis to be trimmed.
-        top_y = min(max(round(crop_centre - (new_height / 2)), 0), trim)
+        top_y = min(max(round(trim_centre - (new_height / 2)), 0), trim)
 
         bottom_y = top_y + new_height
 
@@ -195,7 +195,11 @@ class Mask:
         """Initialise object."""
         self.source = source
         self.opacity = opacity
+        self.mask = Image.open(self.source)
 
+    def apply(self, image: Image.Image):
+        """Apply the mask."""
+        return Image.blend(image, self.mask, self.opacity)
 
 
 settings = Settings()

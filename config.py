@@ -51,14 +51,23 @@ class ConfigEntry:
                 assert abs_path in settings.instructions
                 self.exclude.add(abs_path)
 
-        # Between 0.0 and 1.0, indicates where the centre of the cropping is.
-        # 0.0 -> crop from the bottom/right, preserving the top/left
-        # 1.0 -> crop from the top/left, preserving the bottom/right
-        # 0.5 -> crop equally from top/left and bottom/right
-        self.crop_anchor: float | None = None
-        if "crop_anchor" in config:
-            assert type(config["crop_anchor"]) == float
-            self.crop_anchor = config["crop_anchor"]
+        # Between 0.0 and 1.0, indicates where the Y-axis centre of the trimming is.
+        # 0.0 -> trim from the bottom, preserving the top
+        # 1.0 -> trim from the top, preserving the bottom
+        # 0.5 -> trim equally from top and bottom
+        self.image_centre_y: float | None = None
+        if "image_centre_y" in config:
+            assert type(config["image_centre_y"]) == float
+            self.image_centre_y = config["image_centre_y"]
+
+        # Between 0.0 and 1.0, indicates where the X-axis centre of the trimming is.
+        # 0.0 -> trim from the right, preserving the left
+        # 1.0 -> trim from the left, preserving the right
+        # 0.5 -> trim equally from left and right
+        self.image_centre_x: float | None = None
+        if "image_centre_x" in config:
+            assert type(config["image_centre_x"]) == float
+            self.image_centre_x = config["image_centre_x"]
 
         self.save_as: str = ""
         if "save_as" in config:
@@ -91,7 +100,8 @@ class ConfigEntry:
         """Get a default ConfigEntry."""
         config = ConfigEntry("", "", {})
         config.ignore = False
-        config.crop_anchor = 0.5
+        config.image_centre_y = 0.5
+        config.image_centre_x = 0.5
 
         return config
 
@@ -136,8 +146,11 @@ class ConfigEntry:
         if other.ignore is not None:
             self.ignore = other.ignore
 
-        if other.crop_anchor is not None:
-            self.crop_anchor = other.crop_anchor
+        if other.image_centre_y is not None:
+            self.image_centre_y = other.image_centre_y
+
+        if other.image_centre_x is not None:
+            self.image_centre_x = other.image_centre_x
 
         if other.save_as != "":
             self.save_as = other.save_as
@@ -155,17 +168,17 @@ class ConfigEntry:
         for path in other.exclude:
             self.override.remove(path)
 
-    def process_image(self):
-        """Manipulate the image and save it to the game's graphics folder."""
+    def process_source_image(self):
+        """Process copies of the image and save them to the game's graphics folder."""
         image = Image.open(os.path.join(self.directory, self.filename + self.extension))
 
         mode = IMAGE_EXTENSIONS[self.extension[1:]]
         if image.mode != mode:
             image = image.convert()
 
-        assert type(self.crop_anchor) == float
+        assert type(self.image_centre_y) == float and type(self.image_centre_x) == float
         for path in self.override:
-            settings.instructions[path].process_image(copy.copy(image), self.save_as, self.duplicates, self.crop_anchor, self.extension, self.folder)
+            settings.instructions[path].process_image(copy.copy(image), self.save_as, self.duplicates, self.image_centre_y, self.image_centre_x, self.extension, self.folder)
 
 
 def process_config_files(directory: str, filename: str):

@@ -1,0 +1,116 @@
+{
+    "_comment": "This is an example config file.",
+    "_comment2": "All config files MUST be named '_config.json'.",
+
+    "default-settings/source-folder/": {
+        "_comment": "This lists all default settings for a folder configuration entry.",
+        "_comment2": "Keys ending with slash or backslash indicate folders. All images and sub-folders in this folder inherit settings defined here.",
+        "_comment3": "Non-default configuration for sub-folders and individual images will override these settings.",
+
+        "_comment_ignore": "If true, every image in this folder and sub-folders is ignored.",
+        "_comment_ignore2": "You can set it to false in the config entry of a sub-folder or an image to process images once more.",
+        "ignore": false,
+
+        "_comment_override": "Relative paths in override determine where images in the config file's directory get saved in the game's graphics folder.",
+        "_comment_override2": "If there are paths in override, both include and exclude must not exist or must be empty.",
+        "_note_override": "IMPORTANT: All paths listed here must have defined instructions in settings.json.",
+        "override": [],
+
+        "_comment_include": "Relative paths in include get added to the paths given in the config files of parent directories.",
+        "_comment_include2": "A path cannot exist in both include and exclude.",
+        "_note_include": "IMPORTANT: All paths listed here must have defined instructions in settings.json.",
+        "include": [],
+
+        "_comment_exclude": "Relative paths in exclude get removed from the paths given in the config files of parent directories.",
+        "_note_exclude": "IMPORTANT: All paths listed here must have defined instructions in settings.json.",
+        "exclude": [],
+
+        "_comment_image_centre_y": "When trimming an image, this determines the centre-point of the trimmed image on Y-axis. The value should be between 0.0 and 1.0.",
+        "_comment_image_centre_y2": "The value 0.0 means that pixels from the bottom of the image are trimmed, while top of the image is preserved.",
+        "_comment_image_centre_y3": "The value 1.0 means that pixels from the top of the image are trimmed, while bottom of the image is preserved.",
+        "_comment_image_centre_y4": "The value 0.5 means that pixels from the top and bottom are trimmed as equally as possible.",
+        "_note_image_centre_y": "In most cases you would want to set this individually for each image that you do not want to be centred when trimmed.",
+        "image_centre_y": 0.5,
+
+        "_comment_image_centre_x": "When trimming an image, this determines the centre-point of the trimmed image on X-axis. The value should be between 0.0 and 1.0.",
+        "_comment_image_centre_x2": "The value 0.0 means that pixels from the right of the image are trimmed, while left of the image is preserved.",
+        "_comment_image_centre_x3": "The value 1.0 means that pixels from the left of the image are trimmed, while right of the image is preserved.",
+        "_comment_image_centre_x4": "The value 0.5 means that pixels from the left and right are trimmed as equally as possible.",
+        "_note_image_centre_x": "In most cases you would want to set this individually for each image that you do not want to be centred when trimmed.",
+        "image_centre_x": 0.5,
+
+        "_comment_folder": "In settings.json, {folder} is a placeholder value which is normally replaced by the name of the folder where the source image is.",
+        "_comment_folder2": "A non-empty string overrides this default behaviour and sets the folder name to whatever is written.",
+        "folder": ""
+    },
+
+    "default-settings/source-image": {
+        "_comment": "This lists all default settings for a source image configuration entry.",
+        "_comment2": "Keys not ending with slash or backslash indicate images. Settings defined here only affect that particular image.",
+        "_comment3": "Note that you MUST NOT include file extensions in the image keys.",
+
+        "_comment4": "These settings work the same way as in the folder configuration.",
+        "ignore": false,
+        "override": [],
+        "include": [],
+        "exclude": [],
+        "image_centre_y": 0.5,
+        "image_centre_x": 0.5,
+
+        "_comment5": "The settings below only work in source image configurations.",
+
+        "_comment_save_as": "Normally the image will be saved with the same name as the source image.",
+        "_comment_save_as2": "This setting can be used to override that behaviour. Do not include the file extension.",
+        "_note_save_as": "Useful if you want to have a different source image for a particular logo size, for example.",
+        "save_as": "",
+
+        "_comment_duplicates": "If you want to use the same source logo for multiple teams, list them all here. Do not include the file extension.",
+        "duplicates": []
+    },
+
+    ".": {
+        "_comment": "This is an example configuration for a folder and its sub-folders.",
+        "_comment2": "Key with only a dot ('.') indicates that these settings apply to the same folder where the config file is, and its sub-folders.",
+
+        "_override_comment": "This configuration erases all prior instructions, if any, for saving images in the game's graphics folder.",
+        "_override_comment2": "In this case, they are replaced by processing and saving the source images of this folder and all sub-folders in clubs' huge, large, medium and small folders.",
+        "override": [
+			"logos/clubs/huge/{folder}",
+			"logos/clubs/large/{folder}",
+			"logos/clubs/medium/{folder}",
+			"logos/clubs/small/{folder}"
+        ],
+
+        "_folder_comment": "The {folder} in the above override setting is replaced by 'National Hockey League'.",
+        "_folder_comment2": "All source images in this folder and sub-folders would be saved to:",
+        "_folder_comment3": "logos/clubs/huge/National Hockey League",
+        "_folder_comment4": "logos/clubs/large/National Hockey League",
+        "_folder_comment5": "logos/clubs/medium/National Hockey League",
+        "_folder_comment6": "logos/clubs/small/National Hockey League",
+        "_folder_comment7": "in the game's graphics folder.",
+        "folder": "National Hockey League"
+    },
+
+    "example-image": {
+        "_comment": "This is an example configuration for an individual image.",
+
+        "_comment_image_centre_y": "If the processed image needs to be trimmed to fit its container, the image's centre-point will be 20% from the top edge.",
+        "image_centre_y": 0.2,
+
+        "_comment_exclude": "The source image retains all prior instructions of where to save it in the graphics folder, apart from the medium logo.",
+        "exclude": [
+			"logos/clubs/medium/{folder}"
+        ],
+
+        "_comment_save_as": "Instead of being saved with the name 'example-image', the name of the processed images will be 'Helsingin Jokerit' in the game's graphics folder.",
+        "save_as": "Helsingin Jokerit",
+
+        "_comment_duplicates": "Every processed image is also saved as these image names.",
+        "_comment_duplicates2": "In our example, the source image 'example-image' would be saved as",
+        "_comment_duplicates3": "'Helsingin Jokerit', 'Helsingin Jokerit A-Jrs' and 'Helsingin Jokerit B-Jrs' in the game's graphics folder.",
+        "duplicates": [
+            "Helsingin Jokerit A-Jrs",
+            "Helsingin Jokerit B-Jrs"
+        ]
+    }
+}

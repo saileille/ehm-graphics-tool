@@ -19,7 +19,11 @@ import PyInstaller.__main__
 def main():
     """Build."""
     PyInstaller.__main__.run([
-        "main.py"
+        "main.py",
+        "--optimize=2",
+        "--clean",
+        "--onefile",
+        "--name=ehm-graphics-tool",
     ])
 
 
