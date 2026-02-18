@@ -96,9 +96,9 @@ class ConfigEntry:
         return config
 
     @staticmethod
-    def create_image_config(directory: str, name: str, extension: str, config_file_dirs: list[str], config_default: ConfigEntry):
+    def create_image_config(img_directory: str, img_name: str, img_extension: str, config_file_dirs: list[str], config_default: ConfigEntry):
         """Create a ConfigEntry for an image."""
-        path = os.path.join(directory, name)
+        path = os.path.join(img_directory, img_name)
         config = copy.deepcopy(config_default)
 
         for dir in config_file_dirs:
@@ -111,23 +111,23 @@ class ConfigEntry:
             for entry in entries:
                 if (
                     (not entry.is_folder and entry.source != path)
-                    or (entry.is_folder and not path.startswith(entry.source))
+                    or (entry.is_folder and not img_directory.startswith(entry.directory))
                 ):
                     continue
 
                 config.overwrite(entry)
 
-        config.directory = directory
-        config.filename = name
-        config.extension = extension
+        config.directory = img_directory
+        config.filename = img_name
+        config.extension = img_extension
         config.source = path
         config.is_folder = False
 
         if config.save_as == "":
-            config.save_as = name
+            config.save_as = img_name
 
         if config.folder == "":
-            config.folder = os.path.basename(directory)
+            config.folder = os.path.basename(img_directory)
 
         return config
 
