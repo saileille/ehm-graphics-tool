@@ -215,6 +215,5 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-/settings.json
+/my_settings.json
 /default_settings.json
-/_settings.json

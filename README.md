@@ -11,7 +11,7 @@ This is a Python script utilising the pillow library for mass-manipulating image
 # How to Use
 Before using the script, you need to give it instructions on what you want to do. [_config.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/_config.json) and [settings.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/settings.json), located in the project's `docs` directory, have all the technical documentation you need, while this guide attempts to teach you how to use those files with practical examples.
 ## Configuring the `settings.json` File
-The `settings.json` file in the project's root directory has ready-made instructions to get you started, but you need to at least change `graphics_folder` and `source_folder` to the game's graphics folder location and the folder location of your source images, respectively.
+The [settings.json](https://github.com/saileille/ehm-graphics-tool/blob/master/settings.json) file in the project's root directory has ready-made instructions to get you started, but you need to at least change `graphics_folder` and `source_folder` to the game's graphics folder location and the folder location of your source images, respectively.
 
 Inside `settings.json`:
 ```json
@@ -21,9 +21,169 @@ Inside `settings.json`:
 ```
 On Windows, you can use either slash (`/`) or two backslashes (`\\`) to separate folders from one another. This applies to every setting in both `settings.json` and `_config.json`.
 
+## Templates
+The default `settings.json` file is made to be as simple as possible, but if you want to customise the instructions to your liking, I recommend using templates. Templates allow for quicker and easier changes in the `settings.json` file, useful particularly if you are testing how different configurations work in the game. For example, backgrounds in the default `settings.json` file are defined like so:
+```json
+"backgrounds/awards": {
+    "width": 1024,
+    "height": 768,
+    "trim": true,
+    "extension": "jpg",
+    "padding_top": 128
+},
+"backgrounds/clubs/{folder}": {
+    "width": 1024,
+    "height": 768,
+    "trim": true,
+    "extension": "jpg",
+    "padding_top": 128
+},
+"backgrounds/comps": {
+    "width": 1024,
+    "height": 768,
+    "trim": true,
+    "extension": "jpg",
+    "padding_top": 128
+},
+"backgrounds/nations/{folder}": {
+    "width": 1024,
+    "height": 768,
+    "trim": true,
+    "extension": "jpg",
+    "padding_top": 128
+},
+"backgrounds/nonplayers": {
+    "width": 1024,
+    "height": 768,
+    "trim": true,
+    "extension": "jpg",
+    "padding_top": 128
+},
+"backgrounds/players": {
+    "width": 1024,
+    "height": 768,
+    "trim": true,
+    "extension": "jpg",
+    "padding_top": 128
+},
+...
+```
+It is unlikely that we will ever find ourselves in a situation where instructions for these folders would differ. It thus makes sense to create a template to define a behaviour, and call that template for each of the folders.
+
+Inside `settings.json`, create a new section called `templates`, and make a new entry called `background_image` inside it, holding the same instructions as the background folders.
+```json
+{
+    "graphics_folder": "D:/SteamLibrary/steamapps/common/Eastside Hockey Manager/data/pictures",
+	"source_folder": "E:/Files/EHM Graphics Project",
+    "templates": {
+        "background_image": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+        }
+    },
+	"instructions": {
+		"backgrounds/awards": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+		},
+		"backgrounds/clubs/{folder}": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+		},
+        ...
+    }
+}
+```
+Then, define each background folder instruction with that template name (`background_image`):
+```json
+{
+    "graphics_folder": "D:/SteamLibrary/steamapps/common/Eastside Hockey Manager/data/pictures",
+	"source_folder": "E:/Files/EHM Graphics Project",
+    "templates": {
+        "background_image": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+        }
+    },
+	"instructions": {
+		"backgrounds/awards": "background_image",
+		"backgrounds/clubs/{folder}": "background_image",
+		"backgrounds/comps": "background_image",
+		"backgrounds/nations/{folder}": "background_image",
+		"backgrounds/nonplayers": "background_image",
+		"backgrounds/players": "background_image",
+        ...
+    }
+}
+```
+If you define a folder's image processing behaviour with a template name, that template obviously has to exist in the `templates` section. However, a template can be left unused, and the script does not complain. Eastside Hockey Manager comes with many resolutions, and each of those resolutions requires a differently sized background image. We can quickly and easily build background images of different sizes by defining several background templates, and then calling the one we want to use.
+```json
+{
+    "graphics_folder": "D:/SteamLibrary/steamapps/common/Eastside Hockey Manager/data/pictures",
+	"source_folder": "E:/Files/EHM Graphics Project",
+    "templates": {
+        "background_image_1024x768": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+        },
+        "background_image_1280x768": {
+			"width": 1280,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+        },
+        "background_image_1366x768": {
+			"width": 1366,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+        },
+        "background_image_1440x900": {
+			"width": 1440,
+			"height": 900,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+        },
+        "background_image_1980x1080": {
+			"width": 1980,
+			"height": 1080,
+			"trim": true,
+			"extension": "jpg",
+			"padding_top": 128
+        }
+    },
+	"instructions": {
+		"backgrounds/awards": "background_image_1024x768",
+		"backgrounds/clubs/{folder}": "background_image_1024x768",
+		"backgrounds/comps": "background_image_1024x768",
+		"backgrounds/nations/{folder}": "background_image_1024x768",
+		"backgrounds/nonplayers": "background_image_1024x768",
+		"backgrounds/players": "background_image_1024x768",
+        ...
+    }
+}
+```
 For in-detail documentation of what everything means, see [settings.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/settings.json).
 ## Configuring a Master `_config.json` File
-Unlike with `settings.json`, you can have as many `_config.json` files as you like, wherever you want in your source folder. I recommend creating one at the root of your source folder as a master config file, and that is what we are going to do in this guide.
+Unlike with `settings.json`, you can have as many `_config.json` files as you like, wherever you want in your source folder. While not obligatory, I recommend creating one at the root of your source folder as a master config file, and that is what we are going to do in this guide.
 
 Let's presume you have the following folder structure in your source directory:
 ```
@@ -43,7 +203,7 @@ source_folder/
 └── people/
 └── backgrounds/
 ```
-We are going to add an empty `_config.json` file at the root of the folder, like so:
+We are going to create a new `_config.json` file at the root of the folder, like so:
 ```
 source_folder/
 ├── clubs/
@@ -135,7 +295,7 @@ We are organising country flags in two folders: `hockey country flags` and `rest
 Our configuration does not separate players and non-players. Instead, all people backgrounds are in the same folder, and they get saved as both nonplayers and players.
 > [!IMPORTANT]
 > All paths used in `override`, `include` and `exclude` settings MUST have defined instructions in `settings.json`!
-## Fine-Tuning with Additional _config.json Files
+## Fine-Tuning with Additional `_config.json` Files
 A single master configuration file can be sufficient, but there can be cases when you want further customisation. Perhaps the same logo is used by multiple teams or competitions. Maybe you want to use an alternative logo for some teams in some logo sizes. What about adding home and away logos? All this is possible by altering or entirely replacing the master config's behaviour in other config files.
 ## The `override` and `save_as` Settings
 Let's say you have the following files inside `clubs/logos/Finland`:
@@ -358,9 +518,9 @@ Of course, we can also do this in our `Finland` folder's `_config.json` file, in
 ```
 > [!IMPORTANT]
 > Note the slash at the end! It is important, as it tells the script that this entry is referring to a folder, not an image.
+
 > [!TIP]
 > The script does not stop scanning the sub-folders of a folder that is set to be `ignore`d, so you can un-`ignore` sub-folders or images in a `_config.json` file, just like you can overwrite any other setting.
-
 The rest of the available settings can be found in the [_config.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/_config.json) file of the project's `docs` folder.
 # Under the Hood
 This is a simplified description of what the script does.
@@ -378,7 +538,12 @@ This is a simplified description of what the script does.
         4. The mask is applied, if `mask` is set.
         5. Padding is applied, if `padding_top`, `padding_bottom`, `padding_left` or `padding_right` is something else than `0`.
 # Version History
-## [1.0.1 - Latest](https://github.com/saileille/ehm-graphics-tool/releases/latest)
+## [1.0.2 - Latest](https://github.com/saileille/ehm-graphics-tool/releases/latest)
+ - Added templates.
+ - The `folder` setting in `_config.json` can now be reset back to its default behaviour by defining it as an empty string (`""`).
+ - Replaced the icon of the executable.
+ - Added version information to the executable.
+## [1.0.1](https://github.com/saileille/ehm-graphics-tool/releases/tag/1.0.1)
 - Fixed a bug where the script treated folder configuration as an image if image of the same name existed.
 - Made it possible to change the Y-axis and X-axis centre-points separately.
 - Improved documentation.

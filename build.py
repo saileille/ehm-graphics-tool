@@ -24,6 +24,8 @@ def main():
         "--clean",
         "--onefile",
         "--name=ehm-graphics-tool",
+        "--icon=favicon.ico",
+        "--version-file=version.txt",
     ])
 
 

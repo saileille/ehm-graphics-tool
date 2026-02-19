@@ -1,5 +1,5 @@
 {
-	"comment": "This is an example settings file. A real settings file MUST be called 'settings.json'.",
+	"comment": "This is an example settings file. A settings file MUST be called 'settings.json'.",
 	"comment2": "Settings file must be in the same folder as the executable.",
 
 	"_comment_graphics_folder": "Configure the game's graphics folder location here. This is where the images will be saved to.",
@@ -8,6 +8,21 @@
 
 	"_comment_source_folder": "This is the folder where the script looks for images.",
 	"source_folder": "E:/Files/EHM 2007 Source Files",
+
+	"_comment_templates": "You can define and re-use instructions with templates.",
+	"_comment_templates2": "The options for templates are the same as for creating instructions directly.",
+	"templates": {
+		"example-background-template": {
+			"width": 1024,
+			"height": 768,
+			"trim": true,
+			"extension": "jpg",
+			"mask": {
+				"image": "background_mask.jpg",
+				"opacity": 0.502
+			}
+		}
+	},
 
 	"_comment_instructions": "This portion defines how the source images are processed before saving to the game's graphics folder.",
 	"_comment_instructions2": "Note that any paths written in _config.json's override, include or exclude lists must have processing instructions defined here.",
@@ -66,169 +81,12 @@
 			}
 		},
 
-		"backgrounds/comps": {
-			"width": 1024,
-			"height": 768,
-			"trim": true,
-			"extension": "jpg",
-			"mask": {
-				"image": "background_mask.jpg",
-				"opacity": 0.502
-			}
-		},
-		"backgrounds/nations/{folder}": {
-			"width": 1024,
-			"height": 768,
-			"trim": true,
-			"extension": "jpg",
-			"mask": {
-				"image": "background_mask.jpg",
-				"opacity": 0.502
-			}
-		},
-		"backgrounds/nonplayers": {
-			"width": 1024,
-			"height": 768,
-			"trim": true,
-			"extension": "jpg",
-			"mask": {
-				"image": "background_mask.jpg",
-				"opacity": 0.502
-			}
-		},
-		"backgrounds/players": {
-			"width": 1024,
-			"height": 768,
-			"trim": true,
-			"extension": "jpg",
-			"mask": {
-				"image": "background_mask.jpg",
-				"opacity": 0.502
-			}
-		},
-		"logos/clubs/background/{folder}": {
-			"width": 512,
-			"height": 98,
-			"opacity": 0.25,
-			"trim": true,
-			"extension": "png"
-		},
-		"logos/comps/background": {
-			"width": 512,
-			"height": 98,
-			"opacity": 0.25,
-			"trim": true,
-			"extension": "png"
-		},
-		"logos/clubs/huge/{folder}": {
-			"width": 279,
-			"height": 150,
-			"extension": "png"
-		},
-		"logos/comps/huge": {
-			"width": 279,
-			"height": 150,
-			"extension": "png"
-		},
-		"flags/huge/{folder}": {
-			"width": 279,
-			"height": 150,
-			"extension": "png"
-		},
-		"logos/clubs/large/{folder}/away": {
-			"width": 507,
-			"height": 86,
-			"extension": "png"
-		},
-		"logos/clubs/large/{folder}/home": {
-			"width": 507,
-			"height": 86,
-			"extension": "png"
-		},
-		"logos/clubs/large/{folder}": {
-			"width": 507,
-			"height": 86,
-			"extension": "png"
-		},
-		"logos/comps/large": {
-			"width": 507,
-			"height": 86,
-			"extension": "png"
-		},
-		"flags/large/{folder}": {
-			"width": 507,
-			"height": 86,
-			"extension": "png"
-		},
-		"logos/clubs/medium/{folder}": {
-			"width": 120,
-			"height": 69,
-			"trim": true,
-			"padding_bottom": 13,
-			"extension": "png"
-		},
-		"logos/comps/medium": {
-			"width": 120,
-			"height": 69,
-			"extension": "png"
-		},
-		"flags/medium/{folder}": {
-			"width": 120,
-			"height": 69,
-			"trim": true,
-			"padding_bottom": 13,
-			"extension": "png"
-		},
-		"logos/clubs/small/{folder}": {
-			"width": 55,
-			"height": 21,
-			"trim": true,
-			"extension": "png"
-		},
-		"logos/comps/small": {
-			"width": 78,
-			"height": 31,
-			"extension": "png"
-		},
-		"flags/small/{folder}": {
-			"width": 98,
-			"height": 21,
-			"extension": "png"
-		},
-		"news/clubs/{folder}": {
-			"width": 200,
-			"height": 425,
-			"extension": "png"
-		},
-		"news/comps": {
-			"width": 200,
-			"height": 425,
-			"extension": "png"
-		},
-		"news/nations/{folder}": {
-			"width": 200,
-			"height": 425,
-			"extension": "png"
-		},
-		"news/nonplayers": {
-			"width": 200,
-			"height": 425,
-			"extension": "png"
-		},
-		"news/players": {
-			"width": 200,
-			"height": 425,
-			"extension": "png"
-		},
-		"nonplayers": {
-			"width": 200,
-			"height": 200,
-			"extension": "png"
-		},
-		"players": {
-			"width": 200,
-			"height": 200,
-			"extension": "png"
-		}
+		"_comment3": "You can reuse the same instructions by calling its template name, defined above in the 'templates'.",
+		"backgrounds/comps": "example-background-template",
+		"backgrounds/nations/{folder}": "example-background-template",
+		"backgrounds/nonplayers": "example-background-template",
+		"backgrounds/players": "example-background-template",
+		"logos/clubs/background/{folder}": "example-background-template",
+		"logos/comps/background": "example-background-template"
 	}
 }

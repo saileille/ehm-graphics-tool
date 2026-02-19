@@ -41,6 +41,7 @@
 
         "_comment_folder": "In settings.json, {folder} is a placeholder value which is normally replaced by the name of the folder where the source image is.",
         "_comment_folder2": "A non-empty string overrides this default behaviour and sets the folder name to whatever is written.",
+        "_comment_folder3": "Defining the setting as an empty string once more re-introduces the default behaviour.",
         "folder": ""
     },
 

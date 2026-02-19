@@ -74,7 +74,7 @@ class ConfigEntry:
             assert type(config["save_as"]) == str
             self.save_as = config["save_as"]
 
-        self.folder: str = ""
+        self.folder: str | None = None
         if "folder" in config:
             assert type(config["folder"]) == str
             self.folder = config["folder"]
@@ -102,6 +102,7 @@ class ConfigEntry:
         config.ignore = False
         config.image_centre_y = 0.5
         config.image_centre_x = 0.5
+        config.folder = ""
 
         return config
 
@@ -155,7 +156,7 @@ class ConfigEntry:
         if other.save_as != "":
             self.save_as = other.save_as
 
-        if other.folder != "":
+        if other.folder is not None:
             self.folder = other.folder
 
         self.duplicates = copy.copy(other.duplicates)
@@ -176,7 +177,12 @@ class ConfigEntry:
         if image.mode != mode:
             image = image.convert()
 
-        assert type(self.image_centre_y) == float and type(self.image_centre_x) == float
+        assert (
+            type(self.image_centre_y) == float
+            and type(self.image_centre_x) == float
+            and type(self.folder) == str
+        )
+
         for path in self.override:
             settings.instructions[path].process_image(copy.copy(image), self.save_as, self.duplicates, self.image_centre_y, self.image_centre_x, self.extension, self.folder)
 

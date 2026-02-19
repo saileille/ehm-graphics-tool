@@ -23,11 +23,28 @@ class Settings:
         self.graphics_folder = os.path.normpath(settings["graphics_folder"])
         self.source_folder = os.path.normpath(settings["source_folder"])
 
+        # Create templates.
+        templates: dict[str, GraphicsSettings] = {}
+        if "templates" in settings:
+            for name, template in settings["templates"].items():
+                templates[name] = GraphicsSettings("", template, self.source_folder)
+
+        # Create instructions either from templates or directly.
         self.instructions: dict[str, GraphicsSettings] = {}
         for folder, instruction in settings["instructions"].items():
             assert type(folder) == str
             real_folder = os.path.join(self.graphics_folder, os.path.normpath(folder))
-            self.instructions[real_folder] = GraphicsSettings(real_folder, instruction, self.source_folder)
+
+            if type(instruction) == str:
+                self.instructions[real_folder] = copy.copy(templates[instruction])
+                self.instructions[real_folder].folder = real_folder
+
+            elif type(instruction) == dict:
+                self.instructions[real_folder] = GraphicsSettings(real_folder, instruction, self.source_folder) # type: ignore
+
+            else:
+                print(str(type(instruction))) # type: ignore
+                raise SyntaxError
 
 
 class GraphicsSettings:
