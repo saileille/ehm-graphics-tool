@@ -190,37 +190,37 @@ Let's presume you have the following folder structure in your source directory:
 ```
 source_folder/
 ├── clubs/
-│ ├── backgrounds/
-│ └── logos/
+│   ├── backgrounds/
+│   └── logos/
 ├── comps/
-│ ├── backgrounds/
-│ └── logos/
+│   ├── backgrounds/
+│   └── logos/
 ├── nations/
-│ ├── backgrounds/
-│ ├── crest logos/
-│ ├── hockey country flags/
-│ ├── iha logos/
-│ └── rest of the world flags/
+│   ├── backgrounds/
+│   ├── crest logos/
+│   ├── hockey country flags/
+│   ├── iha logos/
+│   └── rest of the world flags/
 └── people/
-└── backgrounds/
+    └── backgrounds/
 ```
 We are going to create a new `_config.json` file at the root of the folder, like so:
 ```
 source_folder/
 ├── clubs/
-│ ├── backgrounds/
-│ └── logos/
+│   ├── backgrounds/
+│   └── logos/
 ├── comps/
-│ ├── backgrounds/
-│ └── logos/
+│   ├── backgrounds/
+│   └── logos/
 ├── nations/
-│ ├── backgrounds/
-│ ├── crest logos/
-│ ├── hockey country flags/
-│ ├── iha logos/
-│ └── rest of the world flags/
+│   ├── backgrounds/
+│   ├── crest logos/
+│   ├── hockey country flags/
+│   ├── iha logos/
+│   └── rest of the world flags/
 ├── people/
-│ └── backgrounds/
+│   └── backgrounds/
 └── _config.json
 ```
 In that `_config.json`, we write the following instructions:
@@ -495,7 +495,7 @@ source_folder/
 └── clubs/
     └── logos/
         └── Finland/
-            ├── alternatives/
+            └── alternatives/
                 ├── _config.json
                 ├── Espoon Blues.png
                 ├── Heinolan Kiekko.png
@@ -511,6 +511,7 @@ Inside, we are going to simply write:
 ```
 > [!TIP]
 > The "." refers to the directory where the `_config.json` file is located.
+
 Of course, we can also do this in our `Finland` folder's `_config.json` file, in which case the entry would look like this:
 ```json
 "alternatives/": {
@@ -522,6 +523,7 @@ Of course, we can also do this in our `Finland` folder's `_config.json` file, in
 
 > [!TIP]
 > The script does not stop scanning the sub-folders of a folder that is set to be `ignore`d, so you can un-`ignore` sub-folders or images in a `_config.json` file, just like you can overwrite any other setting.
+
 The rest of the available settings can be found in the [_config.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/_config.json) file of the project's `docs` folder.
 # Under the Hood
 This is a simplified description of what the script does.
