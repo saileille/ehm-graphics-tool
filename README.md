@@ -8,6 +8,7 @@ This is a Python script utilising the pillow library for mass-manipulating image
 - [Download](https://github.com/saileille/ehm-graphics-tool/archive/refs/heads/master.zip) the entire master branch and extract it to the location of your liking.
 - [Install](https://www.python.org/downloads/) Python 3.
 - [Install](https://pypi.org/project/pillow/) pillow.
+- To run the script, execute the `main.py` file, located at the root of the project directory.
 # How to Use
 Before using the script, you need to give it instructions on what you want to do. [_config.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/_config.json) and [settings.json](https://github.com/saileille/ehm-graphics-tool/blob/master/docs/settings.json), located in the project's `docs` directory, have all the technical documentation you need, while this guide attempts to teach you how to use those files with practical examples.
 ## Configuring the `settings.json` File
